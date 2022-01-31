@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bonding images</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+        <canvas id="canvas" class="canvas" width="1200" height="600"></canvas>
+        <div class="buttons">
+            <button id="btn-left" class="btn btn_left">Влево</button>
+            <button id="btn-right" class="btn btn_right">Вправо</button>
+            <a id="btn-download" href="#" class="btn btn_download" onclick="saveCanvasAsImageFile()">Скачать</a>
+        </div>
+    </div>
+</body>
+<script>
+    var canvas = document.getElementById("canvas"),
+     ctx = canvas.getContext('2d'),
+     first_image = new Image(),
+     second_image = new Image();
+    
+    let firstPos = 0,
+        secondPos = 600;
+    first_image.onload = () =>{
+        ctx.drawImage(first_image, firstPos, 0);
+    }
+
+    second_image.onload = () =>{
+        ctx.drawImage(second_image, secondPos, 0);
+    }
+
+
+    first_image.src = 'firstimg.png';  
+    second_image.src = 'secondimg.png';
+    let btnLeft = document.getElementById("btn-left"),
+        btnRight = document.getElementById("btn-right"),
+        btnDownload = document.getElementById("btn-download");
+    
+    btnLeft.addEventListener('click', () => {
+	    ctx.clearRect(0,0, 1200, 600);
+        secondPos -= 10;
+        ctx.drawImage(first_image, firstPos, 0);
+        ctx.drawImage(second_image, secondPos, 0);
+    });
+
+    btnRight.addEventListener('click', () => {
+	    ctx.clearRect(0,0, 1200, 600);
+        secondPos += 10;
+        ctx.drawImage(first_image, firstPos, 0);
+        ctx.drawImage(second_image, secondPos, 0);
+    });
+    
+    function saveCanvasAsImageFile(){
+        btnDownload.download = "image.png";
+        btnDownload.href = canvas.toDataURL();
+    }
+</script>
+</html>

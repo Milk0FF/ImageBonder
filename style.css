@@ -1,0 +1,61 @@
+html{
+    height: 100%;
+}
+body{
+    height: 100%;
+    margin:0;
+    padding:0;
+    font-family: 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', sans-serif;
+}
+input{
+    width:180px;
+}
+a{
+    display: inline-block;
+    text-decoration: none;
+}
+.app{
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.canvas{
+    border: 2px solid black;
+    margin-bottom: 15px;
+}
+
+.bottom_row{
+    text-align: center;
+    margin-bottom: 20px;
+}
+.btn{
+    border:0;
+    background-color: black;
+    color: white;
+    padding: 20px 35px;
+    font-size:16px;
+    transition: 0.2s ease all;
+    cursor: pointer;
+    border-radius: 12px;
+    margin-right: 20px;
+}
+.btn:disabled{
+    cursor: default;
+    background-color: gray;
+    opacity: 0.5;
+}
+.btn_success{
+    font-size: 14px;
+    padding: 10px 15px;
+}
+.bottom_row input{
+    margin-right:20px;
+}
+.btn:hover{
+    background-color: gray;
+}
+.btn:last-child{
+    margin:0;
+}

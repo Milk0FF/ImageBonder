@@ -1,61 +1,84 @@
-html{
-    height: 100%;
+html {
+  min-height: 100%;
 }
-body{
-    height: 100%;
-    margin:0;
-    padding:0;
-    font-family: 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', sans-serif;
+body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Tahoma", sans-serif;
 }
-input{
-    width:180px;
+input {
+  font-family: "Tahoma", sans-serif;
+  font-size: 14px;
+  width: 180px;
+  color: white;
+  outline: none;
+  padding: 10px 15px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  background-color: black;
 }
-a{
-    display: inline-block;
-    text-decoration: none;
+input::placeholder {
+  color: white;
 }
-.app{
-    min-height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+a {
+  display: inline-block;
+  text-decoration: none;
 }
-.canvas{
-    border: 2px solid black;
-    margin-bottom: 15px;
+.app {
+  padding: 50px 0;
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.canvas {
+  border: 1px solid black;
+  margin-bottom: 25px;
+}
+.pointer {
+  border-left: 2px dashed red;
+  position: absolute;
+  height: 100px;
+  top: 0;
+  left: 10px;
 }
 
-.bottom_row{
-    text-align: center;
-    margin-bottom: 20px;
+.bottom_row {
+  text-align: center;
+  margin-bottom: 20px;
 }
-.btn{
-    border:0;
-    background-color: black;
-    color: white;
-    padding: 20px 35px;
-    font-size:16px;
-    transition: 0.2s ease all;
-    cursor: pointer;
-    border-radius: 12px;
-    margin-right: 20px;
+.bottom_row:first-child {
+  margin-bottom: 50px;
 }
-.btn:disabled{
-    cursor: default;
-    background-color: gray;
-    opacity: 0.5;
+.btn {
+  border: 0;
+  background-color: black;
+  /* #4682B4 */
+  color: white;
+  padding: 20px 35px;
+  font-size: 16px;
+  transition: 0.2s ease all;
+  cursor: pointer;
+  border-radius: 12px;
+  margin-right: 20px;
 }
-.btn_success{
-    font-size: 14px;
-    padding: 10px 15px;
+.btn:disabled {
+  cursor: default;
+  background-color: gray;
+  opacity: 0.5;
 }
-.bottom_row input{
-    margin-right:20px;
+.btn_success {
+  font-size: 14px;
+  padding: 10px 15px;
 }
-.btn:hover{
-    background-color: gray;
+.bottom_row input {
+  margin-right: 20px;
 }
-.btn:last-child{
-    margin:0;
+.btn:hover {
+  background-color: gray;
+}
+.btn:last-child {
+  margin: 0;
 }

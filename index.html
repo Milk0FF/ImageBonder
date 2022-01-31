@@ -10,14 +10,15 @@
 <body>
     <div class="app">
         <canvas id="canvas" class="canvas" width="1200" height="600"></canvas>
+        <div id="pointer" class="pointer"></div>
         <div class="bottom">
             <div class="bottom_row">
                 <input id="input-change-interval" type="text" placeholder="Шаг (1 - 100px)">
                 <button id="btn-change-interval" class="btn btn_success">Применить</button>
             </div>
             <div class="bottom_row">
-                <button id="isLeftImage" class="btn btn_left btn_active">Левое изб.</button>
-                <button id="isRightImage" class="btn btn_right" disabled>Правое изб.</button>
+                <button id="btnIsLeftImage" class="btn btn_left">Левое изб.</button>
+                <button id="btnIsRightImage" class="btn btn_right">Правое изб.</button>
             </div>
             <div class="buttons">
                 <button id="btn-left" class="btn btn_left">Влево</button>
@@ -30,82 +31,106 @@
 <script>
     var canvas = document.getElementById("canvas"),
      ctx = canvas.getContext('2d'),
-     first_image = new Image(),
-     second_image = new Image(),
-     step = 10;
+     firstImage = new Image(),
+     secondImage = new Image(),
+     step = 10,
+     firstImageHeight = 0,
+     secondImageHeight = 0,
+     currentHeight = 0;
+     
     let isChangeButtons = false;
     
     let firstPos = 0,
         secondPos = 600;
-    first_image.onload = () =>{
-        ctx.drawImage(first_image, firstPos, 0);
+
+    firstImage.src = 'firstimg.png';  
+    secondImage.src = 'secondimg.png';
+    firstImageHeight =  firstImage.height;
+    secondImageHeight =  secondImage.height;
+
+    if(firstImageHeight > secondImageHeight){
+        firstImageHeight = secondImageHeight;
+        currentHeight = firstImageHeight;
+    }
+    else{
+        secondImageHeight = firstImageHeight;
+        currentHeight = secondImageHeight;
     }
 
-    second_image.onload = () =>{
-        ctx.drawImage(second_image, secondPos, 0);
+    canvas.height = firstImageHeight;
+
+    firstImage.onload = () =>{
+        console.log('first', canvas, firstImageHeight);
+        ctx.drawImage(firstImage, firstPos, 0);
     }
 
+    secondImage.onload = () =>{
+        console.log('second', canvas, secondImageHeight);
+        ctx.drawImage(secondImage, secondPos, 0);
+    }
 
-    first_image.src = 'firstimg.png';  
-    second_image.src = 'secondimg.png';
     let btnLeft = document.getElementById("btn-left"),
         btnRight = document.getElementById("btn-right"),
         btnDownload = document.getElementById("btn-download");
         btnChangeInterval = document.getElementById("btn-change-interval");
-        // btnChangeNumber = document.getElementById("btn-change-number");
         inputChangeInterval = document.getElementById("input-change-interval");
-        // inputChangeNumber = document.getElementById("input-change-number");
-        btnIsLeftImage = document.getElementById("isLeftImage");
-        btnIsRightImage = document.getElementById("isRightImage");
+        btnIsLeftImage = document.getElementById("btnIsLeftImage");
+        btnIsRightImage = document.getElementById("btnIsRightImage"),
+        pointer = document.getElementById("pointer"),
         isLeftImage = true;
-    
+    pointer.style.left = (canvas.offsetLeft + secondPos - 1) + 'px';
+    pointer.style.top = canvas.offsetTop + 'px';
+    pointer.style.height = canvas.height + 'px';
+    console.log('pointer', pointer);
+    btnIsLeftImage.disabled = true;
+
     btnLeft.addEventListener('click', () => {
-	    ctx.clearRect(0,0, 1200, 600);
+	    ctx.clearRect(0,0, 1200, currentHeight);
         if(isLeftImage)
            firstPos -= Number(step);
         else
            secondPos -= Number(step);
-        ctx.drawImage(first_image, firstPos, 0);
-        ctx.drawImage(second_image, secondPos, 0);
+        pointer.style.left = (canvas.offsetLeft + secondPos - 1) + 'px';
+        ctx.drawImage(firstImage, firstPos, 0);
+        ctx.drawImage(secondImage, secondPos, 0);
     });
 
     btnRight.addEventListener('click', () => {
-        ctx.clearRect(0,0, 1200, 600);
+        ctx.clearRect(0,0, 1200, currentHeight);
         if(isLeftImage)
            firstPos += Number(step);
         else
            secondPos += Number(step);
-        ctx.drawImage(first_image, firstPos, 0);
-        ctx.drawImage(second_image, secondPos, 0);
+        pointer.style.left = (canvas.offsetLeft + secondPos - 1) + 'px';
+        ctx.drawImage(firstImage, firstPos, 0);
+        ctx.drawImage(secondImage, secondPos, 0);
     });
+
     btnChangeInterval.addEventListener('click', () => {
         if(inputChangeInterval.value > 0 && inputChangeInterval.value !== '' && inputChangeInterval.value<=100){
             step = inputChangeInterval.value;
             return;
         }
         alert('Неверно введены данные!');
-    });
-    // btnChangeNumber.addEventListener('click', () => {
-    //     if(inputChangeNumber.value > 0 && inputChangeNumber.value <= 2){
-    //         btnChangeNumber = inputChangeNumber.value;
-    //         return
-    //     }
-    //     alert('Неверно введены данные!');
-    // });
-    
+    });  
+
     btnIsLeftImage.addEventListener('click', () => {
+        btnIsRightImage.disabled = false;
+        btnIsLeftImage.disabled = true;
         isLeftImage = true;
-        console.log(123);
-        // isLeftImage.
     });
-    btnIsRightImage.addEventListener('click', () => {
+
+    btnIsRightImage.addEventListener('click', (e) => {
+        btnIsLeftImage.disabled = false;
+        btnIsRightImage.disabled = true;
         isLeftImage = false;
-        console.log(123);
     });
     
     function saveCanvasAsImageFile(){
         btnDownload.download = "image.png";
         btnDownload.href = canvas.toDataURL();
     }
+    
+    console.log('second', canvas, secondImageHeight);
 </script>
 </html>
